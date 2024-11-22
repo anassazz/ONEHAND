@@ -121,4 +121,37 @@ void supprimer_tache() {
         }
     }
 }
-       
+     int main() {
+    int choix;
+
+    do {
+        afficher_menu();
+        scanf("%d", &choix);
+
+        switch (choix) {
+            case 1:
+                ajouter_tache();
+                break;
+            case 2:
+                afficher_taches();
+                break;
+            case 3:
+                modifier_tache();
+                break;
+            case 4:
+                supprimer_tache();
+                break;
+            case 5:
+                filtrer_par_priorite();
+                break;
+            case 6:
+                printf("Au revoir !\n");
+                break;
+            default:
+                printf("Option invalide. Veuillez réessayer.\n");
+        }
+    } while (choix != 6);
+
+    return 0;
+}
+  
