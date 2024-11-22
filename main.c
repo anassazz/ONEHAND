@@ -60,3 +60,28 @@ void afficher_taches() {
         printf("Priorité : %s\n", taches[i].priorite);
     }
 }
+
+ // Modifier une tâche 
+void modifier_tache() {
+    int index;
+    printf("Entrez le numéro de la tâche à modifier : ");
+    scanf("%d", &index);
+
+    if (index < 1 || index > nb_taches) {
+        printf("Numéro de tâche invalide.\n");
+        return;
+    }
+
+    Tache *tache = &taches[index - 1];
+
+    printf("Modifier le titre (%s) : ", tache->titre);
+    scanf(" %[^\n]", tache->titre);
+    printf("Modifier la description (%s) : ", tache->description);
+    scanf(" %[^\n]", tache->description);
+    printf("Modifier la date d'échéance (%s) : ", tache->date_echeance);
+    scanf("%s", tache->date_echeance);
+    printf("Modifier la priorité (%s) : ", tache->priorite);
+    scanf("%s", tache->priorite);
+
+    printf("Tâche modifiée avec succès.\n");
+}
