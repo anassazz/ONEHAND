@@ -45,3 +45,18 @@ void ajouter_tache() {
     taches[nb_taches++] = nouvelle_tache;
     printf("Tâche ajoutée avec succès.\n");
 }
+
+void afficher_taches() {
+    if (nb_taches == 0) {
+        printf("Aucune tâche à afficher.\n");
+        return;
+    }
+
+    for (int i = 0; i < nb_taches; i++) {
+        printf("\nTâche %d :\n", i + 1);
+        printf("Titre : %s\n", taches[i].titre);
+        printf("Description : %s\n", taches[i].description);
+        printf("Date d'échéance : %s\n", taches[i].date_echeance);
+        printf("Priorité : %s\n", taches[i].priorite);
+    }
+}
