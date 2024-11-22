@@ -24,3 +24,24 @@ void afficher_menu() {
     printf("6. Quitter\n");
     printf("Choisissez une option : ");
 }
+
+void ajouter_tache() {
+    if (nb_taches >= MAX_TACHES) {
+        printf("La liste des tâches est pleine.\n");
+        return;
+    }
+
+    Tache nouvelle_tache;
+
+    printf("Titre : ");
+    scanf(" %[^\n]", nouvelle_tache.titre);
+    printf("Description : ");
+    scanf(" %[^\n]", nouvelle_tache.description);
+    printf("Date d'échéance (AAAA-MM-JJ) : ");
+    scanf("%s", nouvelle_tache.date_echeance);
+    printf("Priorité (High/Low) : ");
+    scanf("%s", nouvelle_tache.priorite);
+
+    taches[nb_taches++] = nouvelle_tache;
+    printf("Tâche ajoutée avec succès.\n");
+}
