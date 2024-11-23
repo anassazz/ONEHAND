@@ -32,6 +32,26 @@ void afficher_menu() {
     printf("Choisissez une option : ");
 }
 
+// Fonction pour vérifier si une date est valide
+int est_date_valide(int jour, int mois, int annee) {
+    if (mois < 1 || mois > 12) {
+        return 0; // Mois invalide
+    }
+
+    int jours_par_mois[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+    // Vérification des années bissextiles
+    if ((annee % 4 == 0 && annee % 100 != 0) || (annee % 400 == 0)) {
+        jours_par_mois[1] = 29; // Février a 29 jours dans une année bissextile
+    }
+
+    if (jour < 1 || jour > jours_par_mois[mois - 1]) {
+        return 0; // Jour invalide
+    }
+
+    return 1; // Date valide
+}
+
 // Fonction pour ajouter une tâche
 void ajouter_tache() {
     if (nb_taches >= 100) {
@@ -50,13 +70,19 @@ void ajouter_tache() {
     nouvelle_tache.description[strcspn(nouvelle_tache.description, "\n")] = 0;
 
     printf("Date d'échéance :\n");
-    printf("Jour: ");
-    scanf("%d", &nouvelle_tache.date_echeance.jour);
-    printf("Mois: ");
-    scanf("%d", &nouvelle_tache.date_echeance.mois);
-    printf("Année: ");
-    scanf("%d", &nouvelle_tache.date_echeance.annee);
-    getchar(); // Consommer le '\n' résiduel après scanf
+    do {
+        printf("Jour: ");
+        scanf("%d", &nouvelle_tache.date_echeance.jour);
+        printf("Mois: ");
+        scanf("%d", &nouvelle_tache.date_echeance.mois);
+        printf("Année: ");
+        scanf("%d", &nouvelle_tache.date_echeance.annee);
+        getchar(); // Consommer le '\n' résiduel après scanf
+
+        if (!est_date_valide(nouvelle_tache.date_echeance.jour, nouvelle_tache.date_echeance.mois, nouvelle_tache.date_echeance.annee)) {
+            printf("Date invalide, veuillez réessayer.\n");
+        }
+    } while (!est_date_valide(nouvelle_tache.date_echeance.jour, nouvelle_tache.date_echeance.mois, nouvelle_tache.date_echeance.annee));
 
     printf("Priorité (High/Low) : ");
     fgets(nouvelle_tache.priorite, sizeof(nouvelle_tache.priorite), stdin);
@@ -103,13 +129,19 @@ void modifier_tache() {
     taches[index - 1].description[strcspn(taches[index - 1].description, "\n")] = 0;
 
     printf("Date d'échéance :\n");
-    printf("Jour: ");
-    scanf("%d", &taches[index - 1].date_echeance.jour);
-    printf("Mois: ");
-    scanf("%d", &taches[index - 1].date_echeance.mois);
-    printf("Année: ");
-    scanf("%d", &taches[index - 1].date_echeance.annee);
-    getchar(); // Consommer le '\n' résiduel
+    do {
+        printf("Jour: ");
+        scanf("%d", &taches[index - 1].date_echeance.jour);
+        printf("Mois: ");
+        scanf("%d", &taches[index - 1].date_echeance.mois);
+        printf("Année: ");
+        scanf("%d", &taches[index - 1].date_echeance.annee);
+        getchar(); // Consommer le '\n' résiduel
+
+        if (!est_date_valide(taches[index - 1].date_echeance.jour, taches[index - 1].date_echeance.mois, taches[index - 1].date_echeance.annee)) {
+            printf("Date invalide, veuillez réessayer.\n");
+        }
+    } while (!est_date_valide(taches[index - 1].date_echeance.jour, taches[index - 1].date_echeance.mois, taches[index - 1].date_echeance.annee));
 
     printf("Modifier la priorité (%s) : ", taches[index - 1].priorite);
     fgets(taches[index - 1].priorite, sizeof(taches[index - 1].priorite), stdin);
