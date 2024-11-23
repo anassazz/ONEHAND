@@ -2,16 +2,20 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_TACHES 100
 
+typedef struct { 
+    int jour;
+    int mois;
+    int annee;
+}Date;
 typedef struct {
     char titre[50];
     char description[255];
-    char date_echeance[11]; // Format : AAAA-MM-JJ
-    char priorite[10];      // "High" ou "Low"
+    char priorite[10]; // "High" ou "Low"
+    Date date_echeance;     
 } Tache;
 
-Tache taches[MAX_TACHES];
+Tache taches[100];
 int nb_taches = 0;
 
 void afficher_menu() {
@@ -26,7 +30,7 @@ void afficher_menu() {
 }
 
 void ajouter_tache() {
-    if (nb_taches >= MAX_TACHES) {
+    if (nb_taches >= 100) {
         printf("La liste des tâches est pleine.\n");
         return;
     }
@@ -37,13 +41,23 @@ void ajouter_tache() {
     scanf(" %[^\n]", nouvelle_tache.titre);
     printf("Description : ");
     scanf(" %[^\n]", nouvelle_tache.description);
-    printf("Date d'échéance (AAAA-MM-JJ) : ");
-    scanf("%s", nouvelle_tache.date_echeance);
+    //date//////
+    printf("Date d'échéance (AAAA-MM-JJ) :\n ");
+    printf("Jour:");
+    scanf("%d", &nouvelle_tache.date_echeance.jour);
+    printf("Mois:");
+    scanf("%d", &nouvelle_tache.date_echeance.mois);
+    printf("Année:");
+    scanf("%d", &nouvelle_tache.date_echeance.annee);
+    //printf("Année--:%d",nouvelle_tache.date_echeance.annee);
+    /////////
     printf("Priorité (High/Low) : ");
     scanf("%s", nouvelle_tache.priorite);
 
     taches[nb_taches++] = nouvelle_tache;
     printf("Tâche ajoutée avec succès.\n");
+            printf("Date d'échéance : %d/%d/%d\n", nouvelle_tache.date_echeance.jour,nouvelle_tache.date_echeance.mois,nouvelle_tache.date_echeance.annee);
+
 }
 
 void afficher_taches() {
@@ -56,7 +70,7 @@ void afficher_taches() {
         printf("\nTâche %d :\n", i + 1);
         printf("Titre : %s\n", taches[i].titre);
         printf("Description : %s\n", taches[i].description);
-        printf("Date d'échéance : %s\n", taches[i].date_echeance);
+        printf("Date d'échéance : %d/%d/%d\n", taches[i].date_echeance.jour,taches[i].date_echeance.mois,taches[i].date_echeance.annee);
         printf("Priorité : %s\n", taches[i].priorite);
     }
 }
@@ -72,16 +86,22 @@ void modifier_tache() {
         return;
     }
 
-    Tache *tache = &taches[index - 1];
 
-    printf("Modifier le titre (%s) : ", tache->titre);
-    scanf(" %[^\n]", tache->titre);
-    printf("Modifier la description (%s) : ", tache->description);
-    scanf(" %[^\n]", tache->description);
-    printf("Modifier la date d'échéance (%s) : ", tache->date_echeance);
-    scanf("%s", tache->date_echeance);
-    printf("Modifier la priorité (%s) : ", tache->priorite);
-    scanf("%s", tache->priorite);
+    printf("Modifier le titre (%s) : ", taches[index - 1].titre);
+    scanf(" %[^\n]", taches[index - 1].titre);
+    printf("Modifier la description (%s) : ", taches[index - 1].description);
+    scanf(" %[^\n]", taches[index - 1].description);
+    //date//////
+    printf("Date d'échéance (AAAA-MM-JJ) :\n ");
+    printf("Jour: ");
+    scanf("%d", &taches[index - 1].date_echeance.jour);
+    printf("Mois: ");
+    scanf("%d", &taches[index - 1].date_echeance.mois);
+    printf("Année: ");
+    scanf("%d", &taches[index - 1].date_echeance.annee);
+    /////////    
+    printf("Modifier la priorité (%s) : ", taches[index - 1].priorite);
+    scanf("%s", taches[index - 1].priorite);
 
     printf("Tâche modifiée avec succès.\n");
 }
@@ -116,11 +136,12 @@ void supprimer_tache() {
             printf("\nTâche %d :\n", i + 1);
             printf("Titre : %s\n", taches[i].titre);
             printf("Description : %s\n", taches[i].description);
-            printf("Date d'échéance : %s\n", taches[i].date_echeance);
+            printf("Date d'échéance : %s\n", taches[i].date_echeance.annee, taches[i].date_echeance.mois,taches[i].date_echeance.jour);
             printf("Priorité : %s\n", taches[i].priorite);
         }
     }
 }
+// La boucle principale gère l'interaction avec l'utilisateur.ss
      int main() {
     int choix;
 
